@@ -26,8 +26,8 @@ function updateBookmark (id, updateData) {
      })
  }
 
- let deleteItem = function(id){
-    return fetch (`${BASE_URL}/items/${id}`, {
+ let deleteBookmark = function(id){
+    return fetch (`${BASE_URL}/bookmarks/${id}`, {
       
         method: 'DELETE',
     
