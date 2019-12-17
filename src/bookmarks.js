@@ -15,7 +15,7 @@ const addBookmarkHTML = `<form id="js-add-bookmark-form">
 <input type="url" name="url"  value="https://www." placeholder="Enter Link"><br>
 <input type="text" required name="title" placeholder="Enter Title"><br>
         <select name="rating">
-            <option>Select Rating</option>
+            <option  selected disabled>Select Rating</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>

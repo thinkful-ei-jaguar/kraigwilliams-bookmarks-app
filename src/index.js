@@ -21,7 +21,7 @@ const main = function () {
     });
    
     allBookmarks.bindEventListeners();
-    console.log("***************************")
+    
     allBookmarks.render();
   };
   
