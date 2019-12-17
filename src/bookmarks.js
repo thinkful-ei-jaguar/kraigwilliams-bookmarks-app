@@ -14,15 +14,15 @@ const addBookmarkHTML = `<form id="js-add-bookmark-form">
 <label for="link">Add Bookmark:</label><br>
 <input type="url" name="url"  value="https://www." placeholder="Enter Link"><br>
 <input type="text" required name="title" placeholder="Enter Title"><br>
-        <select name="rating">
-            <option  selected disabled>Select Rating</option>
+        <select value="null" name="rating">
+            <option selected disabled>Select Rating</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-<textarea name="desc" placeholder="Add a Description (optional)"></textarea><br>
+<textarea name="desc" value=null placeholder="Add a Description (optional)"></textarea><br>
 <button type="reset">Cancel</button>
 <input id="create-bookmark" type="submit" placeholder="Create"><br>
 
@@ -34,18 +34,18 @@ const addBookmarkHTML = `<form id="js-add-bookmark-form">
 const renderAddPage= function(){
 $("#new-bookmark").click(function(event){
 $("main").html(addBookmarkHTML)
-console.log("render addpage ran")
+
 }
 
 )}
 
 const handleAddBookmark = function () {
     renderAddPage();
-console.log("*************** should be able to add bookmarks")
+
     
 $(document).on("submit", "#js-add-bookmark-form",function(event) {
         event.preventDefault();
-console.log("***************i was clicked");
+
         //$('.js-bookmark-list-entry').val('');
 
         const title= this.title.value
@@ -60,7 +60,7 @@ console.log(title,url,rating,desc)
             .then(res => res.json())
             .then((newBookmark) => {
                 store.addBookmark(newBookmark);
-                console.log(newBookmark);
+                
                 render();
             });
 
@@ -69,9 +69,9 @@ console.log(title,url,rating,desc)
 //This function maps over the array then selects the title and adds it to the li tags
 const generateBookmarkElement = function(bookmark) {
     let title = bookmark.title
-    console.log("this is the bookmark title", title)
-    const bookmarkTitle = `<li class ="js-bookmark-list-item toggle-item-expand"> ${bookmark.title}</li>`;
-    console.log(bookmarkTitle, "this is the clean bookmark title")
+    //this is the bookmark title
+    const bookmarkTitle = `<li server-id="${bookmark.id}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="delete">Delete</button></li>`;
+    // this is the clean bookmark title
     return bookmarkTitle;
 }
 
@@ -87,13 +87,13 @@ const render = function () {
 
     let bookmarks = [...store.bookmarks];
     
-console.log("should be bookmarks", bookmarks)
+//should be bookmarks
 
     
 
     // render the shopping list in the DOM
     const bookmarkListTitles = generateBookmarkList(bookmarks);
-console.log("all the li", bookmarkListTitles)
+
     // insert that HTML into the DOM
     $('.js-bookmark-list').html(bookmarkListTitles);
 };
@@ -101,6 +101,33 @@ console.log("all the li", bookmarkListTitles)
 
 
 
+/*const getBookmarkIdFromElement = function(bookmark) {
+     const selected= $(bookmark).parent().data('server-id');
+    console.log(selected,"this is selected");
+     return selected
+  };
+  */
+  const handleDeleteItemClicked = function () {
+    // like in `handleItemCheckClicked`, we use event delegation
+    $(document).on('click', '.delete', function(event){
+      // get the index of the item in store.items
+      
+      console.log("delete was clicked",)
+      const id = $(event.currentTarget).closest("li").attr("server-id")
+      //This is the id to delete
+      // delete the item
+      api.deleteBookmark(id)
+      .then(res => res.json())
+      .then(() => {
+        store.findAndDelete(id);
+        render();
+      //store.findAndDelete(id);
+      // render the updated shopping list
+     // render();
+    
+    });
+  });
+  };
 
 
 
@@ -113,7 +140,8 @@ this.toogleClass(toggle-item-expand)
 
 const bindEventListeners = function () {
     handleAddBookmark();
-   console.log("Bind event listeners")
+    handleDeleteItemClicked();
+   
     //generateBookmarkList();
    // generateBookmarkElement();
     
