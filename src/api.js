@@ -12,6 +12,7 @@ const createBookmark = function (title, url, desc, rating) {
         delete newBookmark.rating
 
     }
+    
     return fetch(`${BASE_URL}/bookmarks`, {
         method: 'POST',
         headers: {
