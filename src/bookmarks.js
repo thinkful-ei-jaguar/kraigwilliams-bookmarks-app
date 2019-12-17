@@ -12,10 +12,10 @@ $("header").click(function(){
 const addBookmarkHTML = `<form id="js-add-bookmark-form">
 <fieldset>
 <label for="link">Add Bookmark:</label><br>
-<input type="url" name="url"  value="https://www." placeholder="Enter Link"><br>
+<input type="url" name="url" required value="https://www." placeholder="Enter Link"><br>
 <input type="text" required name="title" placeholder="Enter Title"><br>
         <select value="null" name="rating">
-            <option selected disabled>Select Rating</option>
+            <option disabled>Select Rating</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
