@@ -5,10 +5,7 @@ function getBookmarks() {
 }
 
 const createBookmark = function (title, url, desc, rating) {
-    if (!desc) {
-        desc = " ";
-    }
- 
+   
     //const newBookmark = JSON.stringify({ title, url, desc, rating });
     const newBookmark = { title, url, desc, rating };
     if(typeof newBookmark.rating !== "number") {
