@@ -1,8 +1,13 @@
 * {
     box-sizing: border-box;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
+
   }
 
+  fieldset{
+    border:none;
+  }
   body{
     background-image: url(https://images.pexels.com/photos/186422/pexels-photo-186422.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260);
     background-repeat: no-repeat; 
@@ -12,7 +17,7 @@
   
    ul{
      background-color:wheat;
-     opacity: 0.8;
+     /*opacity: 0.8;*/
      padding-bottom:300px;
      border-radius:50px;
      margin-bottom:100px;
@@ -20,8 +25,19 @@
      margin-right:20%;
    }
 
-   header{
+   header *{
     font-family: 'Audiowide', cursive;
+}
 
+textarea{
+  margin-left:25%;
+  margin-right:25%;
 
-   }
+  font-size: large;
+  margin-top:1%;
+  width:700px;
+  height:300px;
+  border-radius:100px;
+  background:black;
+  color:white;
+}

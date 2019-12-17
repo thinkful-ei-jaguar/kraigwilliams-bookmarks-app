@@ -2,17 +2,29 @@ import $ from 'jquery';
 import store from './store';
 import api from './api';
 
+const redirectHome= function(){
+$("header").click(function(){
 
+})
+}
 
-const addBookmarkHTML = `<form class="js-add-bookmark-form">
+//<button name="1" type="button">&#10032;</button ><button name="2" type="button">&#10032;</button><button name="3" type="button">&#10032;</button><button name="4" type="button">&#10032;</button><button name="5" type="button">&#10032;</button>
+const addBookmarkHTML = `<form id="js-add-bookmark-form">
 <fieldset>
 <label for="link">Add Bookmark:</label><br>
-<input type="text" name="url" placeholder="Enter Link"><br>
+<input type="url" name="url"  value="https://www." placeholder="Enter Link"><br>
 <input type="text" required name="title" placeholder="Enter Title"><br>
-<p><button name="1" type="button">&#10032;</button ><button name="2" type="button">&#10032;</button><button name="3" type="button">&#10032;</button><button name="4" type="button">&#10032;</button><button name="5" type="button">&#10032;</button></p>
-<textarea name="descr" placeholder="Enter Description"></textarea><br>
+        <select name="rating">
+            <option>Select Rating</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+<textarea name="desc" placeholder="Add a Description (optional)"></textarea><br>
 <button type="reset">Cancel</button>
-<input type="submit" placeholder="Create"><br>
+<input id="create-bookmark" type="submit" placeholder="Create"><br>
 
 
 </fieldset>
@@ -29,21 +41,26 @@ console.log("render addpage ran")
 
 const handleAddBookmark = function () {
     renderAddPage();
-    $('.js-add-bookmark-form').submit(function (event) {
+console.log("*************** should be able to add bookmarks")
+    
+$(document).on("submit", "#js-add-bookmark-form",function(event) {
         event.preventDefault();
+console.log("***************i was clicked");
+        //$('.js-bookmark-list-entry').val('');
 
-        $('.js-bookmark-list-entry').val('');
+        const title= this.title.value
+        const url=this.url.value
+         const rating=this.rating.value
+        const desc= this.desc.value
 
-        const title = event.target.title.value
-        const url = event.target.url.value
-        const rating = event.target.rating.value
-        const descr = event.target.descr.value
-        console.log(title, url, rating, descr)
+console.log(title,url,rating,desc)
 
-        api.createBookmark(title, url, descr, rating)
+
+        api.createBookmark(title, url, desc, rating)
             .then(res => res.json())
             .then((newBookmark) => {
                 store.addBookmark(newBookmark);
+                console.log(newBookmark);
                 render();
             });
 
@@ -96,8 +113,9 @@ this.toogleClass(toggle-item-expand)
 
 const bindEventListeners = function () {
     handleAddBookmark();
-    generateBookmarkList();
-    generateBookmarkElement();
+   console.log("Bind event listeners")
+    //generateBookmarkList();
+   // generateBookmarkElement();
     
 };
 // This object contains the only exposed methods from this module:

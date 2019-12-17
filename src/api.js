@@ -4,8 +4,8 @@ function getBookmarks () {
     return fetch (`${BASE_URL}/bookmarks`); 
 }
 
-const createBookmark = function (title, url, descr, rating) {
-    const newBookmark = JSON.stringify({ title, url, descr, rating });
+const createBookmark = function (title, url, desc, rating) {
+    const newBookmark = JSON.stringify({ title, url, desc, rating });
     return fetch (`${BASE_URL}/bookmarks`, {
         method: 'POST',
         headers: { 
