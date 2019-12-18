@@ -1,7 +1,6 @@
 const bookmarks = [];
 const expanded= false;
-const filtered = true;
-
+const hideFiltered = true;
 
 
 
@@ -22,11 +21,17 @@ const filtered = true;
 this.expanded=!this.expanded
   };
 
+  const findByRating = function (ratingNum) {
+    return this.bookmarks.filter(currentItem => currentItem.rating === id);
+  };
+
   export default{
 bookmarks,
 findById,
 addBookmark,
 findAndDelete,
 expanded,
-toggleExpanded
+toggleExpanded,
+findByRating
+
   }

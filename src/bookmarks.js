@@ -11,7 +11,7 @@ import api from './api';
 
 
   const optionsHTML=  `<input id="new-bookmark" type="button" value=" + New Bookmark">
-        <select >
+        <select id="rating-selction">
             <option selected disabled>Filter By</option>
             <option>1</option>
             <option>2</option>
@@ -90,7 +90,7 @@ const handleAddBookmark = function () {
 const generateBookmarkElement = function (bookmark) {
     let title = bookmark.title
     //this is the bookmark title
-    const bookmarkTitle = `<li server-id="${bookmark.id}" description="${bookmark.desc}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="expand">Show Description</button> <button class="delete">Delete</button></li>`;
+    const bookmarkTitle = `<li rating=${bookmark.rating} server-id="${bookmark.id}" description="${bookmark.desc}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="expand">Show Description</button> <button class="delete">Delete</button></li>`;
     // this is the clean bookmark title
     return bookmarkTitle;
 }
@@ -110,6 +110,17 @@ const generateBookmarkDescriptions = function(bookmark){
     return bookmarkDescriptions
 }
 
+const handleFiltering= function(){
+const ratingToUse=$("#rating").val()
+store.findByRating(ratingToUse)
+   /*const filterChosen = $("select").val();
+   store.bookmarks.filter(function(item){
+    if(filterChosen===store.bookmarks.rating){
+        return store
+            }
+   })*/
+
+}
 //This function receives the bookmarks from the store and calls the functions to map over it, select the titles and render to the dom
 const render = function () {
 
@@ -181,7 +192,8 @@ const handleExpandBookmark = function() {
 const bindEventListeners = function () {
     handleAddBookmark();
     handleDeleteItemClicked();
-    handleExpandBookmark();
+    handleExpandBookmark(); 
+    handleFiltering();
 
     //generateBookmarkList();
     // generateBookmarkElement();
