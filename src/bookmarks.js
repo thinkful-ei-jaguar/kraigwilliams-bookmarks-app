@@ -110,9 +110,17 @@ const generateBookmarkDescriptions = function(bookmark){
     return bookmarkDescriptions
 }
 
+/*const onClickFilter =function(){
+
+}
+*/
 const handleFiltering= function(){
-const ratingToUse=$("#rating").val()
-store.findByRating(ratingToUse)
+    $(document).on("click", "#rating",function(event){
+        const ratingToUse=this.val()
+        console.log(rating, "this is the rating selected");
+        store.findByRating(ratingToUse)
+    })
+
    /*const filterChosen = $("select").val();
    store.bookmarks.filter(function(item){
     if(filterChosen===store.bookmarks.rating){
@@ -181,9 +189,9 @@ const handleExpandBookmark = function() {
     //store.expanded= !store.expanded;
         console.log(store.expanded)
         event.preventDefault();
-    
+    //const closeButton =`<button class="close">Close</button>`
         const currentBookmarkDescription = $(event.currentTarget).closest("li").attr("description")
-        const addDescription =$("<span></span>").text(currentBookmarkDescription);
+        const addDescription= $("<span></span>").text(currentBookmarkDescription);
         $(event.currentTarget).closest("li").after(addDescription);
     })
 }
