@@ -10,7 +10,7 @@ import api from './api';
 
 
 
-  const optionsHTML=  `<input id="new-bookmark" type="button" value=" + New">
+  const optionsHTML=  `<input id="new-bookmark" type="button" value=" + New Bookmark">
         <select >
             <option selected disabled>Filter By</option>
             <option>1</option>
