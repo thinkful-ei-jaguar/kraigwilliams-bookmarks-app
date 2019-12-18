@@ -90,7 +90,7 @@ const handleAddBookmark = function () {
 const generateBookmarkElement = function (bookmark) {
     let title = bookmark.title
     //this is the bookmark title
-    const bookmarkTitle = `<li server-id="${bookmark.id}" description="${bookmark.desc}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="expand">Expand</button> <button class="delete">Delete</button></li>`;
+    const bookmarkTitle = `<li server-id="${bookmark.id}" description="${bookmark.desc}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="expand">Show Description</button> <button class="delete">Delete</button></li>`;
     // this is the clean bookmark title
     return bookmarkTitle;
 }
