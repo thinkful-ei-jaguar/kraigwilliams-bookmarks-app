@@ -2,12 +2,24 @@ import $ from 'jquery';
 import store from './store';
 import api from './api';
 
-const redirectHome = function () {
+/*const redirectHome = function () {
     $("header").click(function () {
 
     })
-}
+}*/
 
+
+
+  const optionsHTML=  `<input id="new-bookmark" type="button" value=" + New">
+        <select >
+            <option selected disabled>Filter By</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>`
+    
 
 
 //<button name="1" type="button">&#10032;</button ><button name="2" type="button">&#10032;</button><button name="3" type="button">&#10032;</button><button name="4" type="button">&#10032;</button><button name="5" type="button">&#10032;</button>
@@ -30,14 +42,16 @@ const addBookmarkHTML = `<form id="js-add-bookmark-form">
 
 
 </fieldset>
-</form> `
+</form> `;
 
-const startPage = function (html) {
-    const renderStartPageHTML = `<form><ul>${html}</ul></form>`
+//adds the form element where the list of bookmarks will be nested
+const startPage = function (bookmarkList) {
+    const renderStartPageHTML = `<form aria-live="polite"><ul>${bookmarkList}<ul></form>`
     return renderStartPageHTML
 }
 const renderAddPage = function () {
-    $("#new-bookmark").click(function (event) {
+    $(document).on("click","#new-bookmark",function (event) {
+        console.log("new button clicked")
         $("main").html(addBookmarkHTML)
 
     }
@@ -52,7 +66,7 @@ const handleAddBookmark = function () {
     $(document).on("submit", "#js-add-bookmark-form", function (event) {
         event.preventDefault();
 
-        //$('.js-bookmark-list-entry').val('');
+        
 
         const title = this.title.value
         const url = this.url.value
@@ -76,33 +90,43 @@ const handleAddBookmark = function () {
 const generateBookmarkElement = function (bookmark) {
     let title = bookmark.title
     //this is the bookmark title
-    const bookmarkTitle = `<li server-id="${bookmark.id}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="delete">Delete</button></li></ul></form>`;
+    const bookmarkTitle = `<li server-id="${bookmark.id}" description="${bookmark.desc}" class="js-bookmark-list-item toggle-item-expand"> ${bookmark.title} <button class="expand">Expand</button> <button class="delete">Delete</button></li>`;
     // this is the clean bookmark title
     return bookmarkTitle;
 }
 
+const generateEachDescription = function(bookmark){
+    const description = `<span> ${bookmark.desc} <button>Close</button></span>`;
+    return description
+}
 
 // This function recevies the array and maps over it calling the generation of the html to be rendered
-const generateBookmarkList = function (bookmarkz) {
-    const bookmarksToRender = bookmarkz.map((item) => generateBookmarkElement(item));
-    return bookmarksToRender.join('');
+const generateBookmarkList = function (bookmark) {
+    const bookmarksList = bookmark.map((item) => generateBookmarkElement(item));
+    return bookmarksList.join('');
 };
+const generateBookmarkDescriptions = function(bookmark){
+    const bookmarkDescriptions = bookmark.map((item)=>generateEachDescription(item));
+    return bookmarkDescriptions
+}
 
 //This function receives the bookmarks from the store and calls the functions to map over it, select the titles and render to the dom
 const render = function () {
 
     let bookmarks = [...store.bookmarks];
+//const descrip =$(<span></span>).text(optionsHTML+bookmarkListTitles)
 
-    //should be bookmarks
-
+////    if(bookmarks.expanded){
+//const showDescription =event.currentTarget.closest('li').val();
+//showDescription.after(descrip)}
 
 
     // render the shopping list in the DOM
     const bookmarkListTitles = generateBookmarkList(bookmarks);
-
+//const bookmarkListDescriptions= generateBookmarkDescriptions(bookmarks);
     // insert that HTML into the DOM
     // $('.js-bookmark-list').html(bookmarkListTitles);
-    $("main").html(startPage(bookmarkListTitles));
+    $("main").html(startPage(optionsHTML+bookmarkListTitles));
 };
 
 
@@ -136,18 +160,28 @@ const handleDeleteItemClicked = function () {
     });
 };
 
+const getBookmarkIdFromElement = function(item) {
+    return $(item).closest('li').attr('server-id');
+  };
 
-
-/*handleExpandBookmark = function () {
-    $("ul").on("click", ".js-bookmark-list-item", function (event) {
-this.toogleClass(toggle-item-expand)
+const handleExpandBookmark = function() {
+    
+    $(document).on("click", ".expand", function(event) {
+    //store.expanded= !store.expanded;
+        console.log(store.expanded)
+        event.preventDefault();
+    
+        const currentBookmarkDescription = $(event.currentTarget).closest("li").attr("description")
+        const addDescription =$("<span></span>").text(currentBookmarkDescription);
+        $(event.currentTarget).closest("li").after(addDescription);
     })
-}*/
+}
 
 
 const bindEventListeners = function () {
     handleAddBookmark();
     handleDeleteItemClicked();
+    handleExpandBookmark();
 
     //generateBookmarkList();
     // generateBookmarkElement();

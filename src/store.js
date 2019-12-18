@@ -1,6 +1,6 @@
 const bookmarks = [];
-
-
+const expanded= false;
+const filtered = true;
 
 
 
@@ -18,10 +18,15 @@ const bookmarks = [];
     this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
   };
 
+  const toggleExpanded = function(){
+this.expanded=!this.expanded
+  };
+
   export default{
 bookmarks,
 findById,
 addBookmark,
 findAndDelete,
-
+expanded,
+toggleExpanded
   }
